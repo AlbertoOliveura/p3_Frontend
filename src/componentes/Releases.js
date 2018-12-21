@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-
 import ReleaseForm from './ui/ReleaseForm';
-import App from "./modal";
-
+import ClassComponent from "./Contador";
 import MainNav from "./MainNav";
-import {Nav, NavItem} from "react-bootstrap";
-import Navbar from "react-bootstrap/es/Navbar";
 
 class Releases extends Component {
 
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
+        var cont = 8;
+        this.state = { contador : cont,
             releases: [
                 {
                     id: 1,
@@ -41,11 +38,13 @@ class Releases extends Component {
     handleSubmit(e, {name, date}) {
         e.preventDefault();
         var state = this.state;
+
         var myRelease = {
             id: state.releases.length + 1,
+
             releaseName: name,
             releaseDate: date
-        }
+        };
         this.setState({releases: state.releases.concat(myRelease)});
     }
 
@@ -54,6 +53,8 @@ class Releases extends Component {
         var myReleases = this.state.releases;
         myReleases.splice(id, 1)
         this.setState({releases: myReleases});
+        this.contador = this.contador - 1;
+
     }
 
 
@@ -63,10 +64,10 @@ class Releases extends Component {
     <MainNav />
 
     <div className="container" >
-        <App submitHandler={this.handleSubmit}/>
 
-        {/*<ReleaseForm  submitHandler={this.handleSubmit} />*/}
+        <ReleaseForm  submitHandler={this.handleSubmit} />
 
+        <ClassComponent text={this.state.releases.length}/>
 
         <table className="table table-hover">
             <thead>
@@ -105,3 +106,6 @@ class Releases extends Component {
 
 
 export default Releases;
+
+
+

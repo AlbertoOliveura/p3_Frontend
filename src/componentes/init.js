@@ -13,6 +13,10 @@ class Init extends Component {
                     <img  width="100%" src={require('../img/images.jpg')}  />
 
                 </div>
+
+
+
+
             </div>
 
         );

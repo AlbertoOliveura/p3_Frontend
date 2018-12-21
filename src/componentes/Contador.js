@@ -1,9 +1,7 @@
 
 import React, { Component } from "react";
-
-
 class Contador extends Component {
-    state = { contador: 4 };
+    state = { contador: this.props.text };
     estilos = {
         fontSize: 40,
         fontWeight: "normal"
@@ -22,9 +20,8 @@ class Contador extends Component {
         const { contador } = this.state;
         return contador === 0 ? "Zero" : contador;
     }
-
+    tratarIncremento = () => {
+        this.setState({ contador: this.state.contador + 1 });
+    };
 }
-export default Contador
-
-
-
+export default Contador;

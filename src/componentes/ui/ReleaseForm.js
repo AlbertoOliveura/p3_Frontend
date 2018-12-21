@@ -1,6 +1,9 @@
 import React from 'react';
 
 const ReleaseForm = ({submitHandler}) => {
+
+
+
     let _releaseName, _releaseDate;
 
 
@@ -17,6 +20,8 @@ const ReleaseForm = ({submitHandler}) => {
         _releaseDate.value = '';
         _releaseName.value = '';
     }
+
+
 
 
 
@@ -45,7 +50,7 @@ const ReleaseForm = ({submitHandler}) => {
             <div>
                 <div>
                     <button type="submit" className="btn btn-success">Salve</button>
-                    <a  type="button"  href="/Releases" className="btn btn-danger"><b>Voltar</b></a>
+                    <a type="button"  href="/" className="btn bx--btn--sm btn-danger "><b>Voltar</b></a>
                 </div>
 
             </div>
