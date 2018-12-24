@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import ReleaseForm from "./ui/ReleaseForm";
+import FormTask from "./FormTask";
 
 
 const customStyles = {
@@ -25,7 +25,6 @@ class App extends React.Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -61,20 +60,16 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <button type="button"  onClick={this.openModal} className="btn btn-primary"><b>+</b></button>
-                <a type="button"  href="/" className="btn bx--btn--sm btn-success "><b>Voltar</b></a>
-
+                <button type="button"  onClick={this.openModal} className="btn btn-primary"><b>Adicionar Task</b></button>
+                <a type="button"  href="/" className="btn  btn-success "><b>Voltar</b></a>
                 <Modal
-
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
                     style={customStyles}
                     contentLabel="Example Modal" >
-
                     <h2 ref={subtitle => this.subtitle = subtitle}>Adicione Task</h2>
-                    <ReleaseForm/>
-
+                    <FormTask />
                 </Modal>
             </div>
         );

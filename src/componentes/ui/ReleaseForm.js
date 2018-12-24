@@ -1,63 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
+import Modal2 from "../modal2";
 
-const ReleaseForm = ({submitHandler}) => {
+class TableRow extends Component {
+    handleRemove (movie) {
+        const url = `http://localhost:3030/task_deletar/${movie}`;
+        axios
+            .delete(url)
+            .then(response => {
+                window.location.reload();
+                console.log(response);
+        }) .catch(function (error) {
+            console.log(error);
+        })
 
+    };
 
+    render() {
 
-    let _releaseName, _releaseDate;
+        return (
+            <tr>
+                <td>
+                    {this.props.obj.id_task}
+                </td>
+                <td>
+                    {this.props.obj.descricao}
+                </td>
+                <td type="date">
+                    {this.props.obj.data_inicio}
+                </td>
+                <td type="date">
+                    {this.props.obj.data_fim}
+                </td>
+                <td>
+                    <div id="app">
+                </div>
+                    <button type="button"  onClick={this.handleRemove.bind(this, this.props.obj.id_task)}className="btn btn-danger"><b>Delete TASK</b></button>
+                </td>
+                <td>
+                    <div id="app">
+                        <Modal2 text={this.props.obj.descricao}/>
+                    </div>
+                </td>
 
-
-
-    const handleSubmit = (e) => {
-        submitHandler(e, {
-            name: _releaseName.value,
-            date: _releaseDate.value}
+            </tr>
         );
-        clearForm();
     }
+}
 
-    const clearForm = () => {
-        _releaseDate.value = '';
-        _releaseName.value = '';
-    }
-
-
-
-
-
-    return (
-
-
-
-
-        <form onSubmit={handleSubmit} className="form-inline">
-
-            <label className="sr-only" htmlFor="inlineFormInput">Release Name</label>
-            <div class="form-group">
-                <input type="text" ref={input => _releaseName = input} className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Task" />
-
-            </div>
-
-
-            <label className="sr-only" htmlFor="inlineFormInputGroup">Release Date</label>
-            <div className="input-group mb-2 mr-sm-2 mb-sm-0">
-
-                <div>
-                    <input type="date" ref={input => _releaseDate = input} className="form-control" id="inlineFormInputGroup" placeholder="Date" />
-
-                </div>
-            </div>
-            <div>
-                <div>
-                    <button type="submit" className="btn btn-success">Salve</button>
-                    <a type="button"  href="/" className="btn bx--btn--sm btn-danger "><b>Voltar</b></a>
-                </div>
-
-            </div>
-            <div>
-            </div>
-        </form>
-    )
-};
-
-export default ReleaseForm;
+export default TableRow;

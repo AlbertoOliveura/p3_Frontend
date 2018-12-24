@@ -1,111 +1,86 @@
 import React, { Component } from 'react';
-import ReleaseForm from './ui/ReleaseForm';
-import ClassComponent from "./Contador";
+import axios from 'axios';
+import TableRow from './ui/ReleaseForm';
 import MainNav from "./MainNav";
+import Contador from "./Contador";
+import {Nav} from "react-bootstrap";
 
-class Releases extends Component {
 
-    constructor() {
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-        var cont = 8;
-        this.state = { contador : cont,
-            releases: [
-                {
-                    id: 1,
-                    releaseName: 'Release 01',
-                    releaseDate: '01/01/2017'
-                },
-                {
-                    id: 2,
-                    releaseName: 'Release 02',
-                    releaseDate: '01/01/2018'
-                },
-                {
-                    id: 3,
-                    releaseName: 'Release 03',
-                    releaseDate: '01/01/2019'
-                },
-                {
-                    id: 4,
-                    releaseName: 'Release 04',
-                    releaseDate: '01/01/2020'
-                }
-            ]
-        }
-    }
+export default class Index extends Component {
 
-    handleSubmit(e, {name, date}) {
-        e.preventDefault();
-        var state = this.state;
 
-        var myRelease = {
-            id: state.releases.length + 1,
-
-            releaseName: name,
-            releaseDate: date
-        };
-        this.setState({releases: state.releases.concat(myRelease)});
-    }
-
-    handleRemove(id){
-        console.log('Implement remove function here!');
-        var myReleases = this.state.releases;
-        myReleases.splice(id, 1)
-        this.setState({releases: myReleases});
-        this.contador = this.contador - 1;
+constructor(props) {
+        super(props);
+        this.state = {serverports: [] , contador: 0};
 
     }
+
+    estilos = {
+        fontSize: 40,
+        fontWeight: "normal"
+
+
+    };
+
+    componentDidMount(){
+        axios.get('http://localhost:3030/tasks')
+            .then(response => {
+                this.setState({  serverports: response.data.task ,contador:  response.data.task.length});
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+
+    }
+    tabRow2(){
+        return this.state.contador
+    }
+
+       tabRow(){
+        return this.state.serverports.map(function(object, i){
+            return <TableRow obj={object} key={i} />;
+
+        });
+
+    }
+
+
 
 
     render() {
-        return (
-<div>
-    <MainNav />
 
-    <div className="container" >
+           return (
 
-        <ReleaseForm  submitHandler={this.handleSubmit} />
+            <div>
 
-        <ClassComponent text={this.state.releases.length}/>
+                <MainNav />
+                <React.Fragment>
 
-        <table className="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nome Task</th>
-                <th>Data Task</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {this.state.releases.map((release, index) => {
-                const onClickRemove = (e) => {
-                    this.handleRemove(index);
-                }
-                return (
-                    <tr key={release.id}>
-                        <th scope="row">{release.id}</th>
-                        <td>{release.releaseName}</td>
-                        <td>{release.releaseDate}</td>
-                        <td><button type="button" className="btn btn-danger btn-sm" onClick={onClickRemove}>Remove</button></td>
-                        <td></td>
+        <span style={this.estilos} className="badge badge-pill badge-warning">
+          {this.tabRow2()}
+        </span>
+
+                </React.Fragment>
+                <div className="container">
+                <table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Task</td>
+                        <td>DATA INICIO</td>
+                        <td>DATA FIM</td>
+                        <td>Excluir</td>
+                        <td>VER TASK</td>
                     </tr>
-                )
-            })}
-
-            </tbody>
-        </table>
-    </div>
-
-</div>
-
+                    </thead>
+                    <tbody>
+                    {this.tabRow()}
+                    </tbody>
+                </table>
+            </div>
+            </div>
         );
     }
 }
-
-
-export default Releases;
-
-
 

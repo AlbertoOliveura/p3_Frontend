@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import LoginPage from './ui/User.js';
-
+import FormTask from "./FormTask";
 
 
 const customStyles = {
@@ -16,7 +15,7 @@ const customStyles = {
 };
 
 
-class App2 extends React.Component {
+class App extends React.Component {
     constructor() {
         super();
 
@@ -26,7 +25,6 @@ class App2 extends React.Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -62,21 +60,15 @@ class App2 extends React.Component {
     render() {
         return (
             <div>
-
-
-                <a  onClick={this.openModal} className="btn btn-primary"><b>+</b></a>
-
+                <button type="button"  onClick={this.openModal} className="btn btn-primary"><b>ver Task</b></button>
                 <Modal
-
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
                     style={customStyles}
                     contentLabel="Example Modal" >
-
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Adicione Task</h2>
-                    <LoginPage/>
-
+                    <h2 ref={subtitle => this.subtitle = subtitle}>Descrição Task</h2>
+                    {this.props.text}
                 </Modal>
             </div>
         );
@@ -86,4 +78,4 @@ class App2 extends React.Component {
 
 
 
-export default App2;
+export default App;
